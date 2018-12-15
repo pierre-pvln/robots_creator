@@ -1,0 +1,27 @@
+#===================================
+# - BLOCK05 BAD BOTS FILTER STARTS HERE -
+#===================================
+# Revision:    2018 12 05 - Bad Bots Building blocks created
+#              2018 12 14 - Site indicator added in comment blocks
+#
+# For site:    default
+#
+# Inspiration: https://www.contentking.nl/academy/robotstxt/
+#
+#===================================
+#
+# Deny website access for the following bots
+User-agent: ahrefs
+Disallow: /
+
+User-agent: dotbot
+Disallow: /
+
+User-agent: semrushbot
+Disallow: /
+
+#
+#===================================
+# - BLOCK05 BAD BOTS FILTER ENDS HERE -
+#===================================
+#

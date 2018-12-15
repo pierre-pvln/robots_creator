@@ -1,0 +1,23 @@
+# Name:     _version.txt
+# Purpose:  set the versioning elements to a value
+# Author:   pierre.veelen@pvln.nl
+
+# Using Semantic Versioning (2.0.0) 
+# Major.Minor[.patch]
+#
+# In summary:
+# Major releases indicate a break in backward compatibility.
+# - change of folder structure
+# - change of file name for generic files
+#
+# Minor releases indicate the addition of new features or a significant change to existing features.
+# - Building blocks added or removed
+#
+# Patch releases indicate that bugs have been fixed.
+# - Changes within building blocks
+#
+# Changes should be commented in CHANGELOG.md
+#
+majorversion=1
+minorversion=0
+patchversion=1
