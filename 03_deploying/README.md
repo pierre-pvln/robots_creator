@@ -1,1 +1,1 @@
-# README file for the .htaccess building blocks deployment scripts
+# README file for the robots.txt building blocks deployment scripts
