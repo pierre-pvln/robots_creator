@@ -1,0 +1,17 @@
+#===================================
+# - BLOCK00 BASELINE STARTS HERE -
+#===================================
+# Revision:    2018 12 07 v0.0.1 Initial version
+#              2018 12 14 - Site indicator added in comment blocks
+#
+# For site:    voluntas
+#
+# Inspiration: -
+#
+# Folder with specific buiding blocks for PVLN
+# Building blocks are different from VOLUNTAS
+#
+#===================================
+# - BLOCK00 BASELINE ENDS HERE -
+#===================================
+#
