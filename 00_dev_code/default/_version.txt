@@ -20,4 +20,4 @@
 #
 majorversion=1
 minorversion=0
-patchversion=1
+patchversion=2

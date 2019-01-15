@@ -20,6 +20,9 @@ Disallow: /
 User-agent: semrushbot
 Disallow: /
 
+User-agent: MJ12bot
+Disallow: / 
+
 #
 #===================================
 # - BLOCK05 BAD BOTS FILTER ENDS HERE -
