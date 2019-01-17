@@ -1,6 +1,12 @@
 ---
 #  Changelog Baselines: robots.txt building blocks building scripts
 ---
+<h4>v.0.0.3 2019-01-17</h4>
+<ul>
+<li>e-mail changed</li>
+<li>Included default version and specific version value in version name</li>
+</ul>
+
 <h4>v.0.0.2 2018-12-07</h4>
 <ul>
 <li>_parameters.txt in 00_dev_code renamed to _version.txt. </li>

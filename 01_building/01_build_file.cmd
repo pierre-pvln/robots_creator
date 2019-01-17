@@ -1,6 +1,6 @@
 :: Name:     01_build_file.cmd
 :: Purpose:  Create the robots.txt file from the building blocks
-:: Author:   pierre.veelen@pvln.nl
+:: Author:   pierre@pvln.nl
 ::
 
 @ECHO off
@@ -53,8 +53,54 @@ IF EXIST 04_folders.cmd (
 IF NOT EXIST "%output_dir%\%baseline%" (MD "%output_dir%\%baseline%")
 )	
 
-:: Retrieving build version parameters
+:: Retrieving build version parameters for default settings
 ::
+SET buildparameter.majorversion=""
+SET buildparameter.minorversion=""
+SET buildparameter.patchversion=""
+
+IF NOT EXIST "%building_blocks%\default\_version.txt" (
+   SET ERROR_MESSAGE=File %building_blocks%\default\_version.txt with build version parameters doesn't exist
+   GOTO ERROR_EXIT
+)
+:: Read parameters file
+:: Inspiration: http://www.robvanderwoude.com/battech_inputvalidation_commandline.php#ParameterFiles
+::              https://ss64.com/nt/for_f.html
+::
+:: Remove comment lines
+TYPE "%building_blocks%\default\_version.txt" | FINDSTR /v # >"%output_dir%\default\robots_parameters_clean.txt"
+:: Check parameter file for unwanted characters
+FINDSTR /R "( ) & ' ` \"" "%output_dir%\default\robots_parameters_clean.txt" > NUL
+IF NOT ERRORLEVEL 1 (
+	SET ERROR_MESSAGE=The parameter file contains unwanted characters, and cannot be parsed.
+	GOTO ERROR_EXIT
+)
+:: Only parse the file if no unwanted characters were found
+FOR /F "tokens=1,2 delims==" %%A IN ('FINDSTR /R /X /C:"[^=][^=]*=.*" "%output_dir%\default\robots_parameters_clean.txt" ') DO (
+	SET buildparameter.%%A=%%B
+)
+
+IF "%buildparameter.majorversion%" == "" (
+	ECHO The buildparameter.majorversion is not defined. Setting it to 0.
+	SET buildparameter.majorversion=0
+)
+IF "%buildparameter.minorversion%" == "" (
+	ECHO The buildparameter.minorversion is not defined. Setting it to 0.
+	SET buildparameter.minorversion=0
+)
+IF "%buildparameter.patchversion%" == "" (
+	ECHO The buildparameter.patchversion is not defined. Setting it to 0.
+	SET buildparameter.patchversion=0
+)
+
+SET buildversiondefault=d%buildparameter.majorversion%.%buildparameter.minorversion%.%buildparameter.patchversion%
+
+:: Retrieving build version parameters for specific settings
+::
+SET buildparameter.majorversion=""
+SET buildparameter.minorversion=""
+SET buildparameter.patchversion=""
+
 IF NOT EXIST "%building_blocks%\%baseline%\_version.txt" (
    SET ERROR_MESSAGE=File %building_blocks%\%baseline%\_version.txt with build version parameters doesn't exist
    GOTO ERROR_EXIT
@@ -89,10 +135,14 @@ IF "%buildparameter.patchversion%" == "" (
 	SET buildparameter.patchversion=0
 )
 
+SET buildversionspecific=s%buildparameter.majorversion%.%buildparameter.minorversion%.%buildparameter.patchversion%
+
 :: Determine the build version
-SET buildversion=v%buildparameter.majorversion%.%buildparameter.minorversion%.%buildparameter.patchversion%
-ECHO Builing: %buildversion%
-ECHO For environment: %baseline%
+SET buildversion=%buildversiondefault%-%buildversionspecific%
+ECHO Building version:      %buildversion%
+ECHO For environment:       %baseline%
+ECHO From default settings: %buildversiondefault%
+ECHO And specific settings: %buildversionspecific%
 
 CD "%cmd_dir%"
 
