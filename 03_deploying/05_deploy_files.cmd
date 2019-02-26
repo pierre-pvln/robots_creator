@@ -76,7 +76,7 @@ FOR /f %%G in ('dir /b /A:-D "robots_*"') DO (
 :: inspiration: http://stackoverflow.com/questions/1192476/format-date-and-time-in-a-windows-batch-script
 ::
 SET HOUR=%time:~0,2%
-SET dtStamp9=%date:~9,4%%date:~6,2%%date:~3,2%_0%time:~1,1%%time:~3,2%%time:~6,2% 
+SET dtStamp9=%date:~9,4%%date:~6,2%%date:~3,2%_0%time:~1,1%%time:~3,2%%time:~6,2%
 SET dtStamp24=%date:~9,4%%date:~6,2%%date:~3,2%_%time:~0,2%%time:~3,2%%time:~6,2%
 IF "%HOUR:~0,1%" == " " (SET dtStamp=%dtStamp9%) ELSE (SET dtStamp=%dtStamp24%)
 
