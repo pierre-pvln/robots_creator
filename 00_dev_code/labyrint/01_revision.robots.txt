@@ -1,0 +1,13 @@
+#===================================
+# - BLOCK01 REVISION STARTS HERE -
+#===================================
+# Revision:    2019 07 31 - v1.0.1 Initial version
+#
+# For site:    labyrint
+#
+# Inspiration: -
+#
+#===================================
+# - BLOCK01 REVISION ENDS HERE -
+#===================================
+#
