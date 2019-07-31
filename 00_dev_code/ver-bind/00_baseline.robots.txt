@@ -8,7 +8,7 @@
 #
 # Inspiration: -
 #
-# Folder with specific buiding blocks for PVLN
+# Folder with specific building blocks for ver-bind
 # Building blocks are different from DEFAULT
 #
 #===================================

@@ -1,4 +1,4 @@
-:: Name:     01_build_file.cmd
+:: Name:     05_build_file.cmd
 :: Purpose:  Create the robots.txt file from the building blocks
 :: Author:   pierre@pvln.nl
 ::
@@ -34,7 +34,7 @@ IF NOT "%baseline%" == "" GOTO BASELINE_FROM_COMMANDLINE
 IF EXIST 00_name.cmd (
    CALL 00_name.cmd
 ) ELSE (
-   SET ERROR_MESSAGE=File with name settings doesn't exist
+   SET ERROR_MESSAGE=[ERROR] File 00_name.cmd with name settings doesn't exist
    GOTO ERROR_EXIT
 )
 :BASELINE_FROM_COMMANDLINE
@@ -46,7 +46,7 @@ FOR %%i IN ("A=a" "B=b" "C=c" "D=d" "E=e" "F=f" "G=g" "H=h" "I=i" "J=j" "K=k" "L
 IF EXIST 04_folders.cmd (
    CALL 04_folders.cmd
 ) ELSE (
-   SET ERROR_MESSAGE=File with folder settings doesn't exist
+   SET ERROR_MESSAGE=[ERROR] File 04_folder.cmd with folder settings doesn't exist
    GOTO ERROR_EXIT
 )
 
@@ -60,7 +60,7 @@ SET buildparameter.minorversion=""
 SET buildparameter.patchversion=""
 
 IF NOT EXIST "%building_blocks%\default\_version.txt" (
-   SET ERROR_MESSAGE=File %building_blocks%\default\_version.txt with build version parameters doesn't exist
+   SET ERROR_MESSAGE=[ERROR] File %building_blocks%\default\_version.txt with build version parameters doesn't exist
    GOTO ERROR_EXIT
 )
 :: Read parameters file
@@ -72,7 +72,7 @@ TYPE "%building_blocks%\default\_version.txt" | FINDSTR /v # >"%output_dir%\defa
 :: Check parameter file for unwanted characters
 FINDSTR /R "( ) & ' ` \"" "%output_dir%\default\robots_parameters_clean.txt" > NUL
 IF NOT ERRORLEVEL 1 (
-	SET ERROR_MESSAGE=The parameter file contains unwanted characters, and cannot be parsed.
+	SET ERROR_MESSAGE=[ERROR] The parameter file contains unwanted characters, and cannot be parsed.
 	GOTO ERROR_EXIT
 )
 :: Only parse the file if no unwanted characters were found
@@ -81,15 +81,15 @@ FOR /F "tokens=1,2 delims==" %%A IN ('FINDSTR /R /X /C:"[^=][^=]*=.*" "%output_d
 )
 
 IF "%buildparameter.majorversion%" == "" (
-	ECHO The buildparameter.majorversion is not defined. Setting it to 0.
+	ECHO [INFO ] The buildparameter.majorversion is not defined. Setting it to 0.
 	SET buildparameter.majorversion=0
 )
 IF "%buildparameter.minorversion%" == "" (
-	ECHO The buildparameter.minorversion is not defined. Setting it to 0.
+	ECHO [INFO ] The buildparameter.minorversion is not defined. Setting it to 0.
 	SET buildparameter.minorversion=0
 )
 IF "%buildparameter.patchversion%" == "" (
-	ECHO The buildparameter.patchversion is not defined. Setting it to 0.
+	ECHO [INFO ] The buildparameter.patchversion is not defined. Setting it to 0.
 	SET buildparameter.patchversion=0
 )
 
@@ -102,7 +102,7 @@ SET buildparameter.minorversion=""
 SET buildparameter.patchversion=""
 
 IF NOT EXIST "%building_blocks%\%baseline%\_version.txt" (
-   SET ERROR_MESSAGE=File %building_blocks%\%baseline%\_version.txt with build version parameters doesn't exist
+   SET ERROR_MESSAGE=[ERROR] File %building_blocks%\%baseline%\_version.txt with build version parameters doesn't exist
    GOTO ERROR_EXIT
 )
 :: Read parameters file
@@ -114,7 +114,7 @@ TYPE "%building_blocks%\%baseline%\_version.txt" | FINDSTR /v # >"%output_dir%\%
 :: Check parameter file for unwanted characters
 FINDSTR /R "( ) & ' ` \"" "%output_dir%\%baseline%\robots_parameters_clean.txt" > NUL
 IF NOT ERRORLEVEL 1 (
-	SET ERROR_MESSAGE=The parameter file contains unwanted characters, and cannot be parsed.
+	SET ERROR_MESSAGE=[ERROR] The parameter file contains unwanted characters, and cannot be parsed.
 	GOTO ERROR_EXIT
 )
 :: Only parse the file if no unwanted characters were found
@@ -123,15 +123,15 @@ FOR /F "tokens=1,2 delims==" %%A IN ('FINDSTR /R /X /C:"[^=][^=]*=.*" "%output_d
 )
 
 IF "%buildparameter.majorversion%" == "" (
-	ECHO The buildparameter.majorversion is not defined. Setting it to 0.
+	ECHO [INFO ] The buildparameter.majorversion is not defined. Setting it to 0.
 	SET buildparameter.majorversion=0
 )
 IF "%buildparameter.minorversion%" == "" (
-	ECHO The buildparameter.minorversion is not defined. Setting it to 0.
+	ECHO [INFO ] The buildparameter.minorversion is not defined. Setting it to 0.
 	SET buildparameter.minorversion=0
 )
 IF "%buildparameter.patchversion%" == "" (
-	ECHO The buildparameter.patchversion is not defined. Setting it to 0.
+	ECHO [INFO ] The buildparameter.patchversion is not defined. Setting it to 0.
 	SET buildparameter.patchversion=0
 )
 
@@ -150,7 +150,7 @@ CD "%cmd_dir%"
 :: inspiration: https://stackoverflow.com/questions/138981/how-to-test-if-a-file-is-a-directory-in-a-batch-script
 :: 
 IF NOT EXIST "%building_blocks%\%baseline%\*" (
-   SET ERROR_MESSAGE=The folder %building_blocks%\%baseline% doesn't exist
+   SET ERROR_MESSAGE=[ERROR] The folder %building_blocks%\%baseline% doesn't exist
    GOTO ERROR_EXIT
 )
 
@@ -165,16 +165,17 @@ IF "%HOUR:~0,1%" == " " (SET dtStamp=%dtStamp9%) ELSE (SET dtStamp=%dtStamp24%)
 :: If robots.txt file exists copy that file to the backup folder en rename that backed-up file.
 ::
 :: check if back_up directory exists
-SET backup_dir=%output_dir%\%baseline%\backup
-IF NOT EXIST "%backup_dir%" (MD "%backup_dir%")
+::SET backup_dir=%output_dir%\backup\%baseline%
+:: backup_dir is set in 04_folders.cmd
+IF NOT EXIST "%backup_dir%\%baseline%" (MD "%backup_dir%\%baseline%")
 
 ::
 IF EXIST "%output_dir%\%baseline%\robots_%buildversion%.txt" (
-	COPY "%output_dir%\%baseline%\robots_%buildversion%.txt" "%backup_dir%\robots_%buildversion%_%dtStamp%.txt"
+	COPY "%output_dir%\%baseline%\robots_%buildversion%.txt" "%backup_dir%\%baseline%\robots_%buildversion%_%dtStamp%.txt"
 	DEL  "%output_dir%\%baseline%\robots_%buildversion%.txt"
 )
 IF EXIST "%output_dir%\%baseline%\robots_%buildversion%_comments.txt" (
-	COPY "%output_dir%\%baseline%\robots_%buildversion%_comments.txt" "%backup_dir%\robots_%buildversion%_%dtStamp%_comments.txt"
+	COPY "%output_dir%\%baseline%\robots_%buildversion%_comments.txt" "%backup_dir%\%baseline%\robots_%buildversion%_%dtStamp%_comments.txt"
 	DEL  "%output_dir%\%baseline%\robots_%buildversion%_comments.txt"
 )
 
@@ -223,7 +224,11 @@ COPY /b %output_dir%\tmp_header.txt+%output_dir%\%baseline%\robots_constructed.t
 DEL %output_dir%\tmp_header.txt
 DEL %output_dir%\%baseline%\robots_clean.txt
 DEL %output_dir%\%baseline%\robots_constructed.txt
+:: remove file with specific settings for baseline
 DEL %output_dir%\%baseline%\robots_parameters_clean.txt
+:: remove file with default settings
+:: in case of baseline=default, it is already removed hence the check if file exists.
+IF EXIST "%output_dir%\default\robots_parameters_clean.txt" ( DEL %output_dir%\default\robots_parameters_clean.txt )
 
 :: Create the robots.txt file 
 COPY %output_dir%\%baseline%\robots_%buildversion%.txt %output_dir%\%baseline%\robots.txt
@@ -233,7 +238,7 @@ GOTO CLEAN_EXIT
 :ERROR_EXIT
 cd "%cmd_dir%" 
 ECHO *******************
-ECHO Error: %ERROR_MESSAGE%
+ECHO %ERROR_MESSAGE%
 ECHO *******************
 
 :CLEAN_EXIT   

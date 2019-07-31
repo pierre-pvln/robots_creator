@@ -1,6 +1,12 @@
 ---
 #  Changelog Baselines: robots.txt building blocks building scripts
 ---
+
+<h4>v.0.0.4 2019-07-29</h4>
+<ul>
+<li>_create_build_scripts.cmd added to automatically create all the required build scripts from folder structure</li>
+</ul>
+
 <h4>v.0.0.3 2019-01-17</h4>
 <ul>
 <li>e-mail changed</li>

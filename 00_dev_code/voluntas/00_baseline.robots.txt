@@ -8,8 +8,8 @@
 #
 # Inspiration: -
 #
-# Folder with specific buiding blocks for PVLN
-# Building blocks are different from VOLUNTAS
+# Folder with specific building blocks for voluntas
+# Building blocks are different from DEFAULT
 #
 #===================================
 # - BLOCK00 BASELINE ENDS HERE -

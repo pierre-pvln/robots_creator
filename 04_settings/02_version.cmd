@@ -8,8 +8,17 @@
 ::
 :: In summary:
 :: Major releases indicate a break in backward compatibility.
+:: - change of folder structure
+:: - change of file name for generic files
+::
 :: Minor releases indicate the addition of new features or a significant change to existing features.
+:: - Building blocks added or removed
+::
 :: Patch releases indicate that bugs have been fixed.
+:: - Changes within building blocks
+::
+:: Changes should be commented in CHANGELOG.md
+::
 
 :: -VERSION
 SET majorversion=0
