@@ -10,6 +10,12 @@ CLS
 CALL 05_build_file.cmd default 
  
 CLS 
+CALL 05_build_file.cmd ipheion 
+ 
+CLS 
+CALL 05_build_file.cmd labyrint 
+ 
+CLS 
 CALL 05_build_file.cmd pvln 
  
 CLS 
